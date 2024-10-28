@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+<!--<script type="text/javascript">-->
+<!--  var a = {n: 1};-->
+<!--  var b = a;-->
+<!--  a.x = a;-->
+<!--  a = {n: 2};-->
+
+<!--  console.log("a.x:",a.x);	// 这时 a.x 的值是多少-->
+<!--  console.log("b.x:",b.x);	// 这时 b.x 的值是多少 {n: 2}-->
+<!--  -->
+<!--  -->
+<!--</script>-->
+<script>
+  console.log("fun:",fun)
+  console.log("person:",person)
+</script>
+
+<script>
+  console.log("person:",person)
+
+  console.log("fun:",fun)
+
+  var person = "Eric";
+
+  console.log("person:",person)
+
+  function fun() {
+    console.log("person:",person)
+    var person = "Tom";
+    console.log("person:",person)
+  }
+
+  fun()
+
+  console.log("person:",person)
+
+  let name = 'outer';
+  function showName() {
+    console.log(name);
+    let name = 'inner';
+  }
+  name = 'updatedOuter';
+  showName();
+</script>
+</html>

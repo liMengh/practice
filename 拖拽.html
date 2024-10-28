@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+    .container {
+        display: flex;
+        width: 500px;
+    }
+
+    .draggable {
+        width: 200px;
+        height: 25px;
+        background-color: lightblue;
+        border-radius: 50px;
+        line-height: 25px;
+        margin-bottom: 15px;
+        user-select: none;
+        cursor: pointer;
+    }
+
+    .moving {
+        background: transparent;
+        color: transparent;
+        border: 1px solid #00B7FF;
+    }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div draggable="true" class="draggable">1</div>
+    <div draggable="true" class="draggable">2</div>
+    <div draggable="true" class="draggable">3</div>
+    <div draggable="true" class="draggable">4</div>
+    <div draggable="true" class="draggable">5</div>
+</div>
+</body>
+<script>
+const containerId = document.getElementsByClassName('container')[0];
+
+// let arr = [1, 2, 3, 4, 5];
+// for (let i = 0; i < arr.length; i++) {
+//   const item = document.createElement('div');
+//   item.setAttribute('class', 'item');
+//   item.setAttribute('draggable', true);
+//   item.innerHTML = arr[i];
+//   containerId.appendChild(item);
+// }
+
+let sourceDiv;
+containerId.ondragover = (e) => {
+  e.preventDefault();
+}
+containerId.ondragstart = (e) => {
+  setTimeout(() => {
+    e.target.classList.add('moving');
+  }, 0);
+  sourceDiv = e.target;
+  e.datatransfer.effectAllowed = 'move';
+};
+
+containerId.ondragenter = (e) => {
+  e.preventDefault();
+  console.log(e.target);
+  if (e.target === containerId || e.target === sourceDiv) return false;
+  let arr = Array.from(containerId.children);
+  let index = arr.indexOf(sourceDiv);
+  let indexNext = arr.indexOf(e.target);
+  if (indexNext > index) {
+    console.log('向下');
+    containerId.insertBefore(sourceDiv, e.target.nextElementSibling);
+  } else {
+    containerId.insertBefore(sourceDiv, e.target);
+    console.log('向上');
+  }
+};
+
+containerId.ondragend = (e) => {
+  e.target.classList.remove('moving');
+};
+
+</script>
+</html>

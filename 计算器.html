@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>计算器</title>
+  <style>
+  body {
+      background-color: #eee;
+  }
+  input {
+      font-size: 20px;
+      padding: 5px;
+      margin: 5px;
+      width: 200px;
+  }
+  button {
+      font-size: 20px;
+      padding: 5px;
+      margin: 5px;
+      width: 50px;
+      background-color: #ccc;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+  }
+  </style>
+</head>
+<body>
+<input type="text" id="input1" placeholder="输入数字">
+<input type="text" id="input2" placeholder="输入数字">
+<br>
+<button onclick="add()">+</button>
+<button onclick="subtract()">-</button>
+<button onclick="multiply()">*</button>
+<button onclick="divide()">/</button>
+<br>
+<input type="text" id="result" placeholder="计算结果">
+<script>
+function add() {
+    var num1 = parseFloat(document.getElementById("input1").value);
+    var num2 = parseFloat(document.getElementById("input2").value);
+    var result = num1 + num2;
+    document.getElementById("result").value = result;
+}
+
+function subtract() {
+    var num1 = parseFloat(document.getElementById("input1").value);
+    var num2 = parseFloat(document.getElementById("input2").value);
+    var result = num1 - num2;
+    document.getElementById("result").value = result;
+}
+
+function multiply() {
+    var num1 = parseFloat(document.getElementById("input1").value);
+    var num2 = parseFloat(document.getElementById("input2").value);
+    var result = num1 * num2;
+    document.getElementById("result").value = result;
+}
+
+function divide() {
+    var num1 = parseFloat(document.getElementById("input1").value);
+    var num2 = parseFloat(document.getElementById("input2").value);
+    var result = num1 / num2;
+    document.getElementById("result").value = result;
+}
+</script>
+</body>
+</html>

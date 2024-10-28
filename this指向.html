@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  // //this 永远指向最后调用它的那个对象
+  // let obj1 = {
+  //   name: "小明",
+  //   fn1: function (val1, val2) {
+  //     console.log(this.name, val1, val2);
+  //   }
+  // };
+  // let obj2 = {
+  //   name: "小红",
+  //   fn2: function () {
+  //     console.log(this.name);
+  //   }
+  // };
+  // // obj1.fn1.call(obj2,111,222);   //this指向改变为obj2
+  //
+  Function.prototype.myCall = function (obj, ...args) {
+    //判断上下文
+    const newObj = obj ? Object(obj) : window.global;
+    //将函数设置为对象的属性
+    newObj.fn = this;
+    //执行这个函数，并拿到返回值
+    const res = newObj.fn(...args);
+    console.log(newObj.fn);
+    //删除这个函数属性
+    delete newObj.fn;
+    console.log(newObj);
+    //返回值
+    return res;
+  };
+  // obj1.fn1.myCall(obj2, 111, 222);
+  //
+  //
+  // function baz() {
+  //   // 当前调用栈是：baz
+  //   // 因此，当前调用位置是全局作用域
+  //   debugger;
+  //   console.log("baz");
+  //   bar(); // <-- bar的调用位置
+  // }
+  //
+  // function bar() {
+  //   // 当前调用栈是：baz --> bar
+  //   // 因此，当前调用位置在baz中
+  //
+  //   console.log("bar");
+  //   foo(); // <-- foo的调用位置
+  // }
+  //
+  // function foo() {
+  //   // 当前调用栈是：baz --> bar --> foo
+  //   // 因此，当前调用位置在bar中
+  //
+  //   console.log("foo");
+  // }
+  //
+  // baz(); // <-- baz的调用位置
+
+  var num = 1;
+  var myObject = {
+    num: 2,
+    add: function() {
+      this.num = 3;
+      (function() {
+        console.log("this.num1:",this.num); //1
+        this.num = 4;
+      })();
+      console.log("this.num2:",this.num); //3
+    },
+    sub: function() {
+      console.log("this.num3:",this.num) //4
+    }
+  }
+  //myObject.add();
+  //console.log("myObject.num:",myObject.num); //3
+ // console.log("num:",num); // 4
+ // var sub = myObject.sub;
+ // sub();
+
+
+  var name = 'window'
+
+  var person1 = {
+    name: 'person1',
+    show1: function () {
+      console.log(this.name)
+    },
+    show2: () => console.log(this.name),
+    show3: function () {
+      return function () {
+        console.log(this.name)
+      }
+    },
+    show4: function () {
+      return () => console.log(this.name)
+    }
+  }
+  var person2 = { name: 'person2' }
+
+ // person1.show1() // person1
+ // person1.show1.call(person2) //person2
+
+ // person1.show2() //window
+ // person1.show2.call(person2) //window
+
+ // person1.show3()() // window
+  //person1.show3().call(person2) //person2
+ // person1.show3.call(person2)() //window
+
+ // person1.show4()() //person1
+ // person1.show4().call(person2) //person1
+  //person1.show4.call(person2)() //person2
+
+  // var name = 'window'
+  //
+  // function Person (name) {
+  //   this.name = name;
+  //   this.show1 = function () {
+  //     console.log(this.name)
+  //   }
+  //   this.show2 = () => console.log(this.name)
+  //   this.show3 = function () {
+  //     return function () {
+  //       console.log(this.name)
+  //     }
+  //   }
+  //   this.show4 = function () {
+  //     return () => console.log(this.name)
+  //   }
+  // }
+  //
+  // var personA = new Person('personA')
+  // var personB = new Person('personB')
+  //
+  // personA.show1() //personA
+  // personA.show1.call(personB) //personB
+  //
+  // personA.show2() //personA
+  // personA.show2.call(personB) //personA
+  //
+  // personA.show3()() //window
+  // personA.show3().call(personB) //personB
+  // personA.show3.call(personB)() // window
+  //
+  // personA.show4()() //personA
+  // personA.show4().call(personB) //personA
+  // personA.show4.call(personB)() //personB
+  //
+  // var obj = {
+  //   say: function () {
+  //     function _say() {
+  //       console.log(this);
+  //     }
+  //     console.log(obj);
+  //     return _say.bind(obj);
+  //   }()
+  // }
+  // obj.say()
+
+  // var value = 3;
+  // var foo = {
+  //   value: 1
+  // };
+  //
+  // function bar() {
+  //   console.log(this.value);
+  // }
+  //
+  // bar.call(foo); // 1
+
+  var foo = {
+    value: 1,
+    bar: function() {
+      console.log(this.value);
+    }
+  };
+
+  foo.bar(); // 1
+  delete foo.bar;
+
+  // 第一版
+  Function.prototype.call2 = function(context) {
+    // 首先要获取调用call的函数，用this可以获取
+    context.fn = this; 		// foo.fn = bar
+    context.fn();			// foo.fn()
+    delete context.fn;		// delete foo.fn
+  }
+
+  // 第二版
+  Function.prototype.call2 = function(context) {
+    context.fn = this;
+    var args = [];
+    for(var i = 1, len = arguments.length; i < len; i++) {
+      args.push(arguments[i]);
+    }
+    eval('context.fn(' + args +')');
+    delete context.fn;
+  }
+  //ES3 call模拟实现
+  Function.prototype.call = function (context) {
+
+  }
+
+  //数组验证
+  function isArray(obj){
+    return Object.prototype.toString.call(obj) === '[object Array]';
+  }
+
+  function add(a) {
+    function sum(b) { // 使用闭包
+      a = a + b; // 累加
+      return sum;
+    }
+    sum.toString = function() { // 重写toString()方法
+      return a;
+    }
+    return sum; // 返回一个函数
+  }
+
+  console.log(add(1).toString());// 1
+  add(1)(2);// 3
+  add(1)(2)(3);// 6
+  add(1)(2)(3)(4);// 10
+
+</script>
+</html>

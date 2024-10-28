@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #box{
+            width: 200px;
+            height: 200px;
+            background: #00B7FF;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        box
+    </div>
+</body>
+<script>
+document.documentElement.addEventListener('click',function() {
+  console.log(1)
+})
+document.getElementById('box').addEventListener('click',function(event) {
+  // event.stopPropagation()
+  console.log(2)
+},true)
+// 五、一个倒序数据插入一个数字依旧保持倒序，请以代码作答
+
+function insertAndMaintainReverse(arr, num) {
+  let inserted = false;
+
+  for (let i = 0; i < arr.length; i++) {
+    if (num >= arr[i]) {
+      arr.splice(i, 0, num);
+      inserted = true;
+      break;
+    }
+  }
+
+  // if (!inserted) {
+  //   arr.unshift(num);
+  // }
+
+  return arr;
+}
+
+let reversedArray = [9, 7, 5, 3, 1];
+let numberToInsert = 10;
+
+let resultArray = insertAndMaintainReverse(reversedArray, numberToInsert);
+console.log(resultArray); // 输出 [9, 7, 5, 4, 3, 1]
+
+</script>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    let arr = [
+      {name:1,value:1},
+      {name:3,value:3},
+      {name:6,value:6},
+      {name:7,value:7},
+      {name:2,value:2},
+      {name:5,value:5},
+      {name:8,value:8},
+    ]
+// 数组排序
+    function compareNumbers(a,b){
+        return a.value - b.value
+    }
+    console.log(arr.sort(compareNumbers))
+</script>
+</html>

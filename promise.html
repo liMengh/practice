@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="file" id="fileInput">
+</body>
+<script type="text/javascript">
+
+  // // 1. 非Promise对象，非thenable对象
+  // Promise.resolve(1).then(console.log) // 1
+  //
+  // // 2. Promise对象成功状态
+  // const p2 = new Promise((resolve) => resolve(2))
+  //
+  // Promise.resolve(p2).then(console.log) // 2
+  //
+  // // 3. Promise对象失败状态
+  // const p3 = new Promise((_, reject) => reject('err3'))
+  //
+  // Promise.resolve(p3).catch(console.error) // err3
+  //
+  // // 4. thenable对象
+  // const p4 = {
+  //   then (resolve) {
+  //     setTimeout(() => resolve(4), 1000)
+  //   }
+  // }
+  // Promise.resolve(p4).then(console.log) // 4
+  //
+  // // 5. 啥都没传
+  // Promise.resolve().then(console.log) // undefined
+
+  // var resolved = Promise.resolve(42);
+  // var rejected = Promise.reject(-1);
+  // var alsoRejected = Promise.reject(Infinity);
+  //
+  // Promise.any([resolved, rejected, alsoRejected]).then(function (result) {
+  //   console.log(result); // 42
+  // });
+  //
+  // Promise.any([rejected, alsoRejected]).catch(function (results) {
+  //   console.log(results instanceof AggregateError); // true
+  //   console.log(results.errors); // [-1, Infinity]
+  // });
+  // 导出
+  const fileInput = document.getElementById('fileInput');
+
+  const uploadCode = (event) => {
+    //此处校验文件后缀
+    let file = event.target.files[0].name; // (利用console.log输出看file文件对象)json
+
+    let num = file.split('.');
+    let mun = num[num.length - 1];
+    console.log("mun",mun)
+    let _that = this;
+    const selectedFile = event.target.files[0];
+    // 读取文件名
+    const name = selectedFile.name;
+    // 读取文件大小
+    const size = selectedFile.size;
+    // FileReader对象，h5提供的异步api，可以读取文件中的数据。
+    const reader = new FileReader();
+    // readAsText是个异步操作，只有等到onload时才能显示数据。
+    reader.readAsText(selectedFile,'UTF-8');
+    reader.onload = function(e) {
+      //当读取完成后回调这个函数,然后此时文件的内容存储到了result中,直接操作即可,此处this指向reader，_that指向vue data，this.result就是文件的内容
+      console.log('result',e.target.result);
+    };
+  };
+  fileInput.addEventListener('change',uploadCode);
+
+</script>
+</html>

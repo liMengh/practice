@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="but">防抖动</button>
+</body>
+<script type="text/javascript">
+function debounce(fn, delay) {
+  let timer
+  return function (...args) {
+    if (timer) {
+      clearTimeout(timer)
+    }
+    timer = setTimeout(() => {
+      fn.apply(this, args)
+    }, delay)
+  }
+}
+
+// 测试
+function task() {
+  console.log('run task')
+}
+
+function debounce(fn,delay) {
+  let timeout = null; //创建一个标记用来存放定时器的返回值
+  return function (...args) {
+    if (timeout){
+      clearTimeout(timeout);
+    }
+    timeout = setTimeout(() => {
+      fn.apply(this,args);
+    },delay)
+  }
+
+}
+function throttle(fn, delay) {
+  let canUse = true;
+  return function() {
+    if (canUse) {
+      fn.apply(this, arguments);
+      canUse = false;
+      setTimeout(() => canUse = true, delay);
+    }
+  }
+}
+const debounceTask = debounce(task, 1000)
+
+const but = document.getElementById("but");
+but.addEventListener("click",debounceTask)
+
+</script>
+</html>

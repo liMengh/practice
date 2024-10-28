@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+
+  function strToHexCharCode1(str) {
+    let val = "";
+    for(let i = 0; i < str.length; i++){
+      if (str == "")
+        val = str.charCodeAt(i).toString(16);
+      else
+        val += "," + str.charCodeAt(i).toString(16);
+    }
+    return val;
+  }
+
+  function strToHexCharCode(str) {
+    let re = /[\u4E00-\u9FA5]/
+    let ar = []
+    for (let i = 0; i < str.length; i++) {
+      let a = ''
+      if (re.test(str.charAt(i))) { // 中文
+        a = encodeURI(str.charAt(i)).replace(/%/g, '')
+      } else {
+        a = str.charCodeAt(i).toString(16)
+      }
+      ar.push(a)
+    }
+    str = ar.join('')
+    return str;
+  }
+  function hexCharCodeToStr(hexCharCodeStr) {
+    let trimedStr = hexCharCodeStr.trim();
+    let rawStr =
+      trimedStr.substr(0,2).toLowerCase() === "0x"
+        ?
+        trimedStr.substr(2)
+        :
+        trimedStr;
+    let len = rawStr.length;
+    if(len % 2 !== 0) {
+      alert("Illegal Format ASCII Code!");
+      return "";
+    }
+    let curCharCode;
+    let resultStr = [];
+    for(let i = 0; i < len;i = i + 2) {
+      curCharCode = parseInt(rawStr.substr(i, 2), 16); // ASCII Code Value
+      resultStr.push(String.fromCharCode(curCharCode));
+    }
+    return resultStr.join("");
+  }
+
+  function hexToStr(hex,encoding) {
+    var trimedStr = hex.trim();
+    var rawStr = trimedStr.substr(0, 2).toLowerCase() === "0x" ? trimedStr.substr(2) : trimedStr;
+    var len = rawStr.length;
+    if (len % 2 !== 0) {
+      alert("Illegal Format ASCII Code!");
+      return "";
+    }
+    var curCharCode;
+    var resultStr = [];
+    for (var i = 0; i < len; i = i + 2) {
+      curCharCode = parseInt(rawStr.substr(i, 2), 16);
+      resultStr.push(curCharCode);
+    }
+    // encoding为空时默认为utf-8
+    var bytesView = new Uint8Array(resultStr);
+    var str = new TextDecoder(encoding).decode(bytesView);
+    return str;
+  }
+  function hexToStr1(str){
+    let val="";
+    let arr = str.split(",");
+    for(let i = 0; i < arr.length; i++){
+      val += String.fromCharCode(parseInt(arr[i],16));
+    }
+    return val;
+  }
+  let readUTF = function(arr) {
+    if (typeof arr === 'string') {
+      return arr;
+    }
+    let UTF = '', _arr = arr;
+    for (let i = 0; i < _arr.length; i++) {
+      let one = _arr[i].toString(2), v = one.match(/^1+?(?=0)/);
+      if (v && one.length == 8) {
+        let bytesLength = v[0].length;
+        let store = _arr[i].toString(2).slice(7 - bytesLength);
+        for (let st = 1; st < bytesLength; st++) {
+          store += _arr[st + i].toString(2).slice(2)
+        }
+        UTF += String.fromCharCode(parseInt(store, 2));
+        i += bytesLength - 1
+      } else {
+        UTF += String.fromCharCode(_arr[i])
+      }
+    }
+    return UTF
+  }
+  // hexToString
+  let hexToString = function (str) {
+    if (str.length % 2 != 0) {
+      return console.log('必须为偶数');
+    }
+    let buf = [];
+    for (let i = 0; i < str.length; i += 2) {
+      buf.push(parseInt(str.substring(i, i + 2), 16));
+    }
+    return readUTF(buf);
+  }
+
+  let address = "北京北京市朝阳区博泰国际商业广场20号楼2单元";
+  let orderNo = "INS_PROJECT_223862441052696576";
+  let roomNo = "5-101";
+  console.log((strToHexCharCode(address)))
+  console.log((strToHexCharCode(orderNo)))
+  console.log((strToHexCharCode(roomNo)))
+  let resultHex = strToHexCharCode(address);
+  console.log(strToHexCharCode1("北京"));
+  console.log(hexToStr1(strToHexCharCode1("你")));
+</script>
+</html>

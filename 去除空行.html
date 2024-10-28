@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  const text = `
+这是第一段。
+
+这是第二段。
+
+
+
+
+
+
+
+
+
+
+
+这是第三段。
+`;
+
+  // 使用正则表达式去掉空行
+  const cleanedText = text.replace(/^\s*[\r\n]/gm, '');
+
+  console.log(cleanedText);
+
+</script>
+</html>

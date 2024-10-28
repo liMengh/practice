@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+  function DoSomething(){}
+  DoSomething.prototype.foo = "bar"; // add a property onto the prototype
+  var doSomeInstancing = new DoSomething();
+  doSomeInstancing.prop = "some value"; // add a property onto the object
+  // console.log( doSomeInstancing );
+
+  function Car() {}
+  car1 = new Car();
+  car2 = new Car();
+
+  console.log(car1.color);    // undefined
+
+  Car.prototype.color = "original color";
+  console.log(car1.color);    // original color
+
+  car1.color = 'black';
+  console.log(car1.color);   // black
+
+  console.log(car1.__proto__.color) //original color
+  console.log(car2.__proto__.color) //original color
+  console.log(car1.color)  // black
+  console.log(car2.color) // original color
+</script>
+</html>

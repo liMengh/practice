@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+// function hex2int(hex) {
+// 	let len = hex.length, a = new Array(len), code;
+// 	for (let i = 0; i < len; i++) {
+// 		code = hex.charCodeAt(i);
+// 		if (48 <= code && code < 58) {
+// 			code -= 48;
+// 		} else {
+// 			code = (code & 0xdf) - 65 + 10;/
+// 		}
+// 		a[i] = code;
+// 	}
+//
+// 	return a.reduce(function (acc, c) {
+// 		acc = 16 * acc + c;
+// 		return acc;
+// 	}, 0);
+// }
+
+// console.log(Math.ceil(hex2int("9B130204000018A5A8".slice(2, 4)) * 1 / 15))
+//   console.log("9B130204000018A5A8".slice(2, 4))
+//   console.log("9B130204000018A5A8".substr(2, 2))
+const url = 'https://www-dev.aphoto.cn/editor/photoBuilder?worksId=56016&productType=1&token=z3qlfyoihcqrc6hflupf01puwxf0giwp';
+searchObj(url)
+function searchObj(str){
+    const index = str.indexOf('?');
+    //去掉？
+    var str=str.slice(index + 1);
+    console.log("str",str)
+    //根据“&”分割字符串
+    var arr=str.split("&");
+    //定义空的obj，保存对象
+    var obj={};
+    //循环遍历分割后的数组
+    for(var p of arr){
+        //根据“=”分割
+        var arr2=p.split("=");
+        //解构
+        var [name,value]=arr2;
+        //如果obj中的name为undefined就把值填进去，否则就连接
+        if(obj[name]==undefined){
+            obj[name]=value;
+        }else{
+            obj[name]=[].concat(value,obj[name])
+        }
+    }
+    console.log("obj",obj)
+    return obj;
+}
+
+</script>
+</html>

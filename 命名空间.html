@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  function namespace(tpl, value) {
+    return tpl.split('.').reduce((pre, curr, i) => {
+      return pre[curr] = (i === tpl.split('.').length - 1 ? (value || pre[curr]) : (pre[curr] || {}))
+    }, window);
+  }
+  namespace('app.a.b', 3); // window.app.a.b 值为 3
+  console.log( namespace('app.a.b'));
+
+
+  // const MYNAMESPACE = {
+  //     person: function(name) {
+  //         console.log(name);
+  //         this.name = name;
+  //         this.getName = function() {
+  //             return this.name;
+  //         }
+  //     }
+  // };
+  //
+  // const p = new MYNAMESPACE.person("ifcode");
+  //
+  // p.getName();
+  // console.log("MYNAMESPACE:",p.name)
+
+
+  const MYNAMESPACE = MYNAMESPACE || {};
+
+  MYNAMESPACE.person = function(name) {
+      this.name = name;
+  };
+
+  MYNAMESPACE.person.prototype.getName = function() {
+      return this.name;
+  };
+
+  // 使用方法
+  const p = new MYNAMESPACE.person("ifcode");
+  p.getName();        // ifcode
+</script>
+</html>

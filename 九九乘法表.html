@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        span{
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+</div>
+<script>
+  const container = document.getElementsByClassName('container')[0];
+    for (let i = 1; i <= 9; i++){
+      let div = document.createElement('div');
+      div.setAttribute('class', 'item');
+      for (let j = 1; j <= i; j++){
+        let span = document.createElement('span');
+        span.innerHTML = j + '*' + i + '=' + i * j;
+        div.appendChild(span);
+        container.appendChild(div);
+        console.log(` ${j} * ${i} = ${i*j}`)
+      }
+    }
+</script>
+
+</body>
+</html>

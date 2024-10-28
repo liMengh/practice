@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+  * {
+      padding: 0;
+      margin: 0;
+  }
+
+  .main-container {
+      width: 100%;
+      height: 100%;
+  }
+
+  .main-container .img-container {
+      width: 100%;
+      height: 100%;
+  }
+
+  .img-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+
+  .img-big {
+      width: 1200px;
+      /*height: 625px;*/
+  }
+
+  .frame-container {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 100px;
+  }
+
+  .img-small {
+      width: 100%;
+  }
+
+  .img-frame {
+      position: absolute;
+      width: 83.3px;
+      height: 52px;
+      border: 2px solid blue;
+      z-index: 10;
+  }
+
+  .ratio-container {
+      position: absolute;
+      right: 20px;
+      top: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100px;
+      height: 50px;
+      cursor: pointer;
+      z-index: 100;
+  }
+
+  .ratio-add {
+      width: 50px;
+      background: #00B7FF;
+      text-align: center;
+      cursor: pointer;
+  }
+
+  .ratio-sub {
+      width: 50px;
+      background: #3da5a5;
+      text-align: center;
+      cursor: pointer;
+  }
+  </style>
+</head>
+<body>
+<div class="main-container">
+  <div class="ratio-container">
+    <div id="ratioAdd" class="ratio-add">+</div>
+    <div id="ratioSub" class="ratio-sub">-</div>
+  </div>
+  <div id="img-container" class="img-container">
+    <img id="img-big" class="img-big" src="./img/03.jpeg">
+  </div>
+
+  <div id="frame-container" class="frame-container">
+    <div id="img-frame" class="img-frame"></div>
+    <img class="img-small" src="./img/03.jpeg">
+  </div>
+</div>
+</body>
+<script>
+window.onload = () => {
+    const proportion = 0.625;
+    const ratio = 0.1;
+    const imgContainer = document.getElementById('img-container');
+    const imgBig = document.getElementById('img-big');
+    const frameContainer = document.getElementById('frame-container');
+    const imgFrame = document.getElementById('img-frame');
+
+    const ratioAdd = document.getElementById('ratioAdd');
+    const ratioSub = document.getElementById('ratioSub');
+
+    const fullWidth = window.innerWidth;
+    const fullHeight = window.innerHeight;
+
+    const initFullWidth = fullWidth * 0.8;
+    const initFullWidthSmall = fullWidth * 0.1;
+
+    imgContainer.style.width = fullWidth + 'px';
+    imgContainer.style.height = fullHeight + 'px';
+    imgBig.style.width = fullWidth * 0.8 + 'px';
+    imgBig.style.height = fullWidth * 0.8 * proportion + 'px';
+
+    frameContainer.style.width = fullWidth * 0.1 + 'px';
+    frameContainer.style.height = fullWidth * 0.1 * proportion + 'px';
+    imgFrame.style.width = fullWidth * 0.1 + 'px';
+    imgFrame.style.height = fullWidth * 0.1 * proportion + 'px';
+
+    ratioAdd.onclick = (val) => {
+        const imgFrameWidth = imgFrame.offsetWidth;
+        imgFrame.style.width = (imgFrameWidth - initFullWidthSmall * (10 / 100)) + 'px';
+        imgFrame.style.height = (imgFrameWidth - initFullWidthSmall * (10 / 100)) * proportion + 'px';
+
+        imgBig.style.width = fullWidth * 0.1 / (imgFrame.offsetWidth / fullWidth) + 'px';
+        imgBig.style.height = fullWidth * 0.1 / (imgFrame.offsetWidth / fullWidth) * proportion + 'px';
+    };
+    ratioSub.onclick = () => {
+        const imgFrameWidth = imgFrame.offsetWidth;
+        imgFrame.style.width = (imgFrameWidth + initFullWidthSmall * (10 / 100)) + 'px';
+        imgFrame.style.height = (imgFrameWidth + initFullWidthSmall * (10 / 100)) * proportion + 'px';
+
+        imgBig.style.width = initFullWidthSmall / (imgFrame.offsetWidth / fullWidth) + 'px';
+        imgBig.style.height = initFullWidthSmall / (imgFrame.offsetWidth / fullWidth) * proportion + 'px';
+    };
+
+
+};
+</script>
+</html>

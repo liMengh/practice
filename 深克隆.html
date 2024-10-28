@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box span {
+            display: inline-block;
+            width: 100px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+
+</div>
+
+</body>
+<script>
+
+  //let arr = [
+  //  {
+  //    name: '1',
+  //    value: '1',
+  //  },
+  //  {
+  //    name: '1',
+  //    value: '1',
+  //  },
+  //  {
+  //    name: '1',
+  //    value: '1',
+  //  },
+  //  {
+  //    name: '2',
+  //    value: '2',
+  //  },
+  //  {
+  //    name: '2',
+  //    value: '2',
+  //  },
+  //];
+  // const unique = (arr, nextId) => {
+  // //obj 储存值
+  //   let obj = {};
+  //   let newArr = [];
+  //   arr.map(item => {
+  //     let isPush = obj[item[nextId]] ? '' : obj[item[nextId]] = true;
+  //     if (isPush) {
+  //       newArr.push(item);
+  //     }
+  //   });
+  //   return newArr;
+  // };
+  //
+  //
+  // const box = document.querySelector('.box');
+  // console.log('box', box);
+  // let arr2 = [];
+  // for (let i = 0; i < 9; i++) {
+  //   const div = document.createElement('div');
+  //   div.classList.add('container')
+  //   for (let j = 0; j < i; j++) {
+  //     const span = document.createElement('span');
+  //     span.innerHTML = '*';
+  //     div.appendChild(span);
+  //   }
+  //   box.appendChild(div);
+  // }
+  //
+  // const query = {
+  //   a:'1',
+  //   b:'2',
+  //   c:'3'
+  // };
+  // let a = '';
+  // for (const key in query){
+  //   a += `${key}=${query[key]}&`
+  // }
+  // let b = a.slice(0,a.length - 1)
+  // console.log(a)
+  // console.log(b)
+
+  // const arr = [1,2,3];
+  // arr.forEach( async (item) => {
+  //   const res = await new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       resolve(item)
+  //     }, 1000)
+  //   });
+  //   console.log(res)
+  // })
+
+  // let arr = [];
+  // arr[0] = 1;
+  // arr['0'] = 2;
+  // console.log(arr[0] + arr['0'])
+
+  // const box = document.getElementsByClassName('box')[0];
+  // const factorial = () => {
+  //   for (let i = 1; i < 10; i++) {
+  //     const div = document.createElement('div');
+  //     for (let j = 1; j <= i; j++) {
+  //       const span = document.createElement('span');
+  //       span.innerHTML = `${j} * ${i} = ${j * i}`;
+  //       console.log(`${j} * ${i} = ${j * i}`)
+  //       div.appendChild(span);
+  //     }
+  //     box.appendChild(div);
+  //   }
+  // };
+  // factorial();
+  // function countDown(num) {
+  //   // 基本情况：当 num 小于等于 0 时，递归结束
+  //   if (num > 6) {
+  //     console.log("倒计时结束！");
+  //     return;
+  //   }
+  //
+  //   console.log(num);
+  //   // 递归调用 countDown 函数，并将 num 减 1
+  //   countDown(num - 1);
+  // }
+  //
+  // // 调用递归函数，传入初始值
+  // // countDown(5);
+  // while (true){
+  //   // console.log(1);
+  // }
+  let originalArray = [{ id: 1, name: 'Alice' }, { id: 2, name: 'Bob' }];
+
+  let shallowCopy = originalArray.slice(); // 或者使用其他浅拷贝方法，如 Object.assign() 对于对象
+
+  shallowCopy[0].name = 'Alicia';
+
+  console.log(originalArray[0].name); // 输出: 'Alicia'
+  console.log(shallowCopy[0].name); // 输出: 'Alicia'
+
+
+  function deepClone3(target) {
+    console.log("deepClone3-target",target)
+    //定义一个变量，准备接新副本对象
+    let newObj;
+    //如果是一个引用类型
+    if (typeof target === 'object') {
+      //如果是个数组
+      if (Array.isArray(target)) {
+        //将新副本赋值为空数组，并遍历
+        newObj = []
+        for (let item in target) {
+          newObj.push(deepClone3(target[item]));
+        }
+      }
+      //判断当前值是null,直接赋值为null
+      else if (target === null) {
+        newObj = null;
+      }
+      //判断当前值是一个正则表达式对象，则直接赋值
+      else if (target.constructor === RegExp) {
+        newObj = target;
+      }
+      //否则为一个普通的对象，直接for in循环递归遍历复制对象中的每个属性值
+      else {
+        newObj = {};
+        for (let item in target) {
+          newObj[item] = deepClone3(target[item])
+        }
+      }
+    }
+    //如果不是引用类型而是基本类型，那么直接赋值
+    else{
+      newObj=target;
+    }
+    //返回最终结果newObj
+    return newObj;
+  }
+
+  let a;
+  console.log("a:",a)
+  let b = {};
+  console.log("b:",b.a)
+
+  const A = [
+    { id: 1, name: 'apple', isShow: true },
+    { id: 2, name: 'banana' },
+    { id: 3, name: 'cherry' },
+    { id: 4, name: 'date' }
+  ];
+
+  const B = [2, 4]; // B数组，按此顺序过滤A数组
+
+  const filteredA = B.map(id => A.find(item => item.id === id && item.isShow !== false))
+  .unshift(...A.filter(item => item.isShow))
+
+
+  console.log("filteredA",filteredA);
+
+
+
+
+
+</script>
+</html>

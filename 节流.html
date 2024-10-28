@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="but">节流</button>
+</body>
+<script type="text/javascript">
+  function throttle(fn,delay) {
+    let canRun = true;
+    return function (...args) {
+      if (!canRun) return false;
+      canRun = false;
+      setTimeout(() => {
+        fn.apply(this,args);
+        canRun = true;
+      },delay)
+    }
+  }
+
+
+  function throttle2(fn,delay) {
+    let timeout = null;
+    return function (...args) {
+      let canRun = true;
+      if (!canRun) return;
+      canRun = false;
+      setTimeout(() => {
+        fn.apply(this,args);
+        canRun = true;
+      }, delay);
+    }
+  }
+
+  var b = 10;
+  (function b(){
+   var b = 20;
+    console.log(b);
+    console.log(this.b);
+  })();
+</script>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  function add (...args) {
+    //求和
+    return args.reduce((a, b) => a + b)
+  }
+
+  function currying (fn) {
+    let args = []
+    return function temp (...newArgs) {
+      console.log("newArgs:",newArgs)
+      if (newArgs.length) {
+        args = [
+          ...args,
+          ...newArgs
+        ]
+        return temp
+      } else {
+        let val = fn.apply(this, args)
+        console.log("val:",val)
+        args = [] //保证再次调用时清空
+        return val
+      }
+    }
+  }
+  let addCurry = currying(add);
+  console.log(addCurry(1,2,3)(2)(3)());
+</script>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+let str = "<p><img src=\"https://lekang-oss.oss-cn-beijing.aliyuncs.com/6c4edddc-46c0-44e8-994f-386305ef4ed1\"><img src=\"https://lekang-oss.oss-cn-beijing.aliyuncs.com/84c195c1-9a6a-4287-8ee5-069454cf72ba\"><img src=\"https://lekang-oss.oss-cn-beijing.aliyuncs.com/e7caa774-fb1e-489f-9e3b-4c6d28163f9d\"></p>"
+let a = str.toString().replace(/<img/gi, '<img class="image-wrap"')
+console.log(a)
+</script>
+</html>

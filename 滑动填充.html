@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+  *{
+      margin: 0;
+      padding: 0;
+  }
+    #container{
+        position: relative;
+        top: 100px;
+        width: 500px;
+        height: 500px;
+        margin: 0 auto;
+        border: 1px solid #000000;
+        cursor: pointer;
+    }
+    #slider{
+        position: absolute;
+        top: 0;
+        left: 50px;
+        width: 50px;
+        height: 50px;
+        background: #00B7FF;
+        cursor: pointer;
+    }
+  </style>
+</head>
+
+<div id="container">
+  <div id="slider"></div>
+</div>
+
+<script>
+const container = document.getElementById('container');
+const slider = document.getElementById('slider');
+
+let startTouchX = 0;
+let lastTouchX = 0;
+let isDragging = false;
+let x,y,initMovementLeft,initMovementTop
+
+container.onmousedown = (e) => {
+    isDragging = true;
+    container.onmousemove = (e) => {
+        if (isDragging){
+            let moveX = e.clientX - container.offsetLeft - slider.offsetWidth / 2;
+            let moveY = e.clientY - container.offsetTop - slider.offsetHeight / 2;
+            if (moveX <= 0){
+                moveX = 0
+            }else if (moveX >= container.offsetWidth - slider.offsetWidth){
+                moveX = container.offsetWidth - slider.offsetWidth
+            }
+            if (moveY <= 0){
+                moveY = 0
+            }else if (moveY >= container.offsetHeight - slider.offsetHeight){
+                moveY = container.offsetHeight - slider.offsetHeight
+            }
+            slider.style.left = moveX + 'px';
+            slider.style.top = moveY + 'px';
+        }
+    }
+    container.onmouseup = () => {
+        isDragging = false;
+    }
+}
+
+
+
+// slider.onmousedown = (e) => {
+//     isDragging = true;
+//     x = e.clientX;
+//     y = e.clientY;
+//     initMovementLeft = slider.offsetLeft;
+//     initMovementTop = slider.offsetTop;
+//     slider.onmousemove = (e) => {
+//         if (isDragging){
+//             let moveX = e.clientX - x + initMovementLeft;
+//             let moveY = e.clientY - y + initMovementTop;
+//             if (moveX <= 0){
+//                 moveX = 0
+//             }else if (moveX >= container.offsetWidth - slider.offsetWidth){
+//                 moveX = container.offsetWidth - slider.offsetWidth
+//             }
+//             if (moveY <= 0){
+//                 moveY = 0
+//             }else if (moveY >= container.offsetHeight - slider.offsetHeight){
+//                 moveY = container.offsetHeight - slider.offsetHeight
+//             }
+//             slider.style.left = moveX + 'px';
+//             slider.style.top = moveY + 'px';
+//         }
+//     }
+//     slider.onmouseup = (e) => {
+//         isDragging = false
+//     }
+//     slider.onmouseover = (e) => {
+//         // isDragging = false
+//     }
+// };
+</script>

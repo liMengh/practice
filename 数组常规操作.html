@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+    //数组字面量命名
+    const arr = new Array(4);
+    const array1 = [5, 12, 8, 130, 44];
+    //at() 方法接收一个整数值并返回该索引的项目，可以接收正整数和负整数。
+    let index = 2;
+    let index2 = -2
+    console.log(array1.at(index))
+    console.log(array1.at(index2))
+    //concat() 用于合并两个或多个数组。此方法不会更改现有数组，而是返回一个新的数组
+    const array4 = ['a', 'b', 'c'];
+    const array2 = ['d', 'e', 'f'];
+    const array3 = array1.concat(array2);
+    Array.prototype.push.apply(array2,array4)
+    console.log(array2);
+    // expected output: Array ["a", "b", "c", "d", "e", "f"]
+</script>
+</html>

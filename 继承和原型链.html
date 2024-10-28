@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+<script type="application/javascript">
+// function doSomething(){}
+// doSomething.prototype.foo = "bar"; // add a property onto the prototype
+// var doSomeInstancing = new doSomething();
+// doSomeInstancing.prop = "some value"; // add a property onto the object
+// console.log( doSomeInstancing );
+// function DoSomething(){}
+// DoSomething.prototype.foo = "bar";
+// var doSomeInstancing = new DoSomething();
+// doSomeInstancing.prop = "some value";
+// console.log("doSomeInstancing.prop:      " + doSomeInstancing.prop); //some value
+// console.log("doSomeInstancing.foo:       " + doSomeInstancing.foo); //bar
+// console.log("doSomething.prop:           " + DoSomething.prop); //undefined
+// console.log("doSomething.foo:            " + DoSomething.foo); // undefined
+// console.log("doSomething.prototype.prop: " + DoSomething.prototype.prop); //undefined
+// console.log("doSomething.prototype.foo:  " + DoSomething.prototype.foo); //bar
+
+// var o = {a: 1};
+
+// o 这个对象继承了 Object.prototype 上面的所有属性
+// o 自身没有名为 hasOwnProperty 的属性
+// hasOwnProperty 是 Object.prototype 的属性
+// 因此 o 继承了 Object.prototype 的 hasOwnProperty
+// Object.prototype 的原型为 null
+// 原型链如下：
+// o ---> Object.prototype ---> null
+// console.log(o)
+
+// var a = ["yo", "whadup", "?"];
+
+// 数组都继承于 Array.prototype
+// (Array.prototype 中包含 indexOf, forEach 等方法)
+// 原型链如下：
+// a ---> Array.prototype ---> Object.prototype ---> null
+
+// function f(){
+//     return 2;
+// }
+
+// 函数都继承于 Function.prototype
+// (Function.prototype 中包含 call, bind 等方法)
+// 原型链如下：
+// f ---> Function.prototype ---> Object.prototype ---> null
+
+"use strict";
+
+class Polygon {
+    constructor(height, width) {
+        this.height = height;
+        this.width = width;
+    }
+}
+
+class Square extends Polygon {
+    constructor(sideLength) {
+        super(sideLength, sideLength);
+    }
+    get area() {
+        return this.height * this.width;
+    }
+    set sideLength(newLength) {
+        this.height = newLength;
+        this.width = newLength;
+    }
+}
+
+var square = new Square(2);
+console.log("square",square)
+
+</script>
+</html>

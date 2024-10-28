@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+    .container {
+        width: 100%;
+        height: 100%;
+    }
+
+    .item {
+        display: flex;
+    }
+
+    .item span {
+        width: 100px;
+        height: 25px;
+        text-align: center;
+        line-height: 25px;
+        border: 1px solid #333333;
+    }
+    </style>
+</head>
+<body>
+<div class="container">
+
+</div>
+
+<input id="firstName" type="text">
+<input id="lastName" type="text">
+<input id="fullName" type="text">
+
+<div id="start">开始</div>
+<div id="pause">暂停</div>
+
+</body>
+<script>
+function handle1() {
+  let arr1 = [];
+  const container = document.getElementsByClassName('container')[0];
+  for (let j = 1; j <= 9; j++) {
+    let div = document.createElement('div');
+    div.setAttribute('class', 'item');
+    for (let i = 1; i <= j; i++) {
+      // console.log(j + '*' + i + '=' + i * j);
+      let span = document.createElement('span');
+      span.innerHTML = j + '*' + i + '=' + i * j;
+      div.appendChild(span);
+      container.appendChild(div);
+    }
+  }
+}
+
+handle1();
+const firstNameId = document.getElementById('firstName');
+const lastNameId = document.getElementById('lastName');
+const fullNameId = document.getElementById('fullName');
+let person = {
+  firstName: '张',
+  lastName: '三',
+  get fullName() {
+    console.log('111');
+    return this.firstName + ' ' + this.lastName;
+  },
+  set fullName(value) {
+    let names = value.split(' ');
+    this.firstName = names[0];
+    this.lastName = names[1];
+    firstNameId.value = this.firstName;
+    lastNameId.value = this.lastName;
+    console.log(value);
+  },
+};
+
+firstNameId.value = person.firstName;
+lastNameId.value = person.lastName;
+fullNameId.value = person.fullName;
+firstNameId.addEventListener('input', (e) => {
+  person.firstName = e.target.value;
+  fullNameId.value = person.fullName;
+});
+lastNameId.addEventListener('input', (e) => {
+  person.lastName = e.target.value;
+  fullNameId.value = person.fullName;
+});
+fullNameId.addEventListener('input', (e) => {
+  person.fullName = e.target.value;
+});
+
+let deWeightArr = [
+  {name: 1, value: 1},
+  {name: 2, value: 2},
+  {name: 1, value: 1},
+  {name: 4, value: 4},
+  {name: 1, value: 1},
+  {name: 5, value: 5},
+  {name: 6, value: 6},
+  {name: 7, value: 7},
+];
+
+function unique(arr, itemId) {
+  let obj = {};
+  arr = arr.reduce((item, nextItem) => {
+    let isPush = obj[nextItem[itemId]] ? '' : obj[nextItem[itemId]] = true;
+    if (isPush) {
+      item.push(nextItem);
+    }
+    return item;
+  }, []);
+  return arr;
+}
+
+console.log('去重', unique(deWeightArr, 'value'));
+
+function progressTask(...tasks) {
+  console.log('tasks', tasks);
+  let isRunning = false;
+  let i = 0;
+  let request = [];
+  return {
+    async start() {
+      return new Promise(async(resolve, reject) => {
+        if (isRunning) {
+          return false;
+        }
+        isRunning = true;
+        while (i < tasks.length) {
+          console.log('任务开始');
+          request.push(await tasks[i]());
+          console.log('任务结束',request);
+          i++;
+          if (!isRunning) {
+            return false;
+          }
+        }
+        resolve(request);
+        isRunning = false;
+      });
+    },
+    pause() {
+      isRunning = false;
+    },
+  };
+
+}
+
+const tasks = [];
+
+for (let i = 0; i < 10; i++) {
+  tasks.push(
+      () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(i);
+          }, 2000);
+        });
+      },
+  );
+}
+
+const start = document.getElementById('start');
+const pause = document.getElementById('pause');
+
+const processor = progressTask(...tasks);
+
+start.onclick = async() => {
+  const result = await processor.start();
+  console.log('result', result);
+};
+
+pause.onclick = () => {
+  processor.pause();
+  console.log("任务暂停")
+};
+
+function  fibonacciRecursive(n) {
+  if (n <= 1) {
+    return n;
+  } else {
+    return fibonacciRecursive(n - 1) + fibonacciRecursive(n - 2);
+  }
+}
+
+// 计算斐波那契数列的前几个数
+for (let i = 0; i < 10; i++) {
+  console.log("fibonacciRecursive:",fibonacciRecursive(6));
+}
+
+requestAnimationFrame(() => {
+
+})
+
+function a() {
+  console.log(1);
+  Promise.resolve().then(function () {
+    console.log(2);
+  });
+}
+setTimeout(function () {
+  console.log(3);
+}, 0);
+
+Promise.resolve().then(a);
+
+console.log(5);
+
+</script>
+</html>

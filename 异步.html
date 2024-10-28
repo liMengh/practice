@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  async function async1() {
+    console.log('async1 start');
+    await async2();
+    console.log('async1 end');
+  }
+  async function async2() {
+    console.log('async2');
+  }
+  console.log('script start');
+  setTimeout(function() {
+    console.log('setTimeout');
+  }, 0)
+  async1();
+  new Promise(function(resolve) {
+    console.log('promise1');
+    resolve();
+  }).then(function() {
+    console.log('promise2');
+  });
+  console.log('script end');
+
+  //promise.finally
+  Promise.prototype.finally = function (callback) {
+    let P = this.constructor;
+    return this.then(
+      value => P.resolve(callback()).then(() => value),
+      reason => P.resolve(callback()).then(() => {throw reason})
+    )
+  }
+
+
+  new Promise((resolve) => {
+      console.log(1)
+      resolve()
+  }).then(async () => {
+      console.log(2)
+  }).then(async () => {
+      console.log(3)
+  })
+  new Promise((resolve) => {
+      console.log('a')
+      resolve()
+  }).then(() => {
+      console.log('b')
+  }).then(() => {
+      console.log('c')
+  }).then(() => {
+      console.log('d')
+  }).then(() => {
+      console.log('e')
+  })
+
+</script>
+</html>

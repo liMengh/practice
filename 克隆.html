@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+
+<script type="text/javascript">
+  function deepClone(obj) {
+    let newObj = Array.isArray(obj) ? [] : {};
+    if (obj && typeof obj === "object") {
+      for (let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          newObj[key] = (obj && typeof obj[key] === "object") ? deepClone(obj[key]) : obj[key];
+        }
+      }
+    }
+    return newObj;
+  }
+
+  function deepClone2(o) {
+    // 判断如果不是引用类型，直接返回数据即可
+    if (typeof o === 'string' || typeof o === 'number' || typeof o === 'boolean' || typeof o === 'undefined') {
+      return o
+    } else if (Array.isArray(o)) { // 如果是数组，则定义一个新数组，完成复制后返回
+      // 注意，这里判断数组不能用typeof，因为typeof Array 返回的是object
+      console.log(typeof [])  // --> object
+      var _arr = []
+      o.forEach(item => { _arr.push(item) })
+      return _arr
+    } else if (typeof o === 'object') {
+      var _o = {}
+      for (let key in o) {
+        _o[key] = deepClone2(o[key])
+      }
+      return _o
+    }
+  }
+
+  function deepClone3(target) {
+    console.log("deepClone3-target",target)
+    //定义一个变量，准备接新副本对象
+    let newObj;
+    //如果是一个引用类型
+    if (typeof target === 'object') {
+      //如果是个数组
+      if (Array.isArray(target)) {
+        //将新副本赋值为空数组，并遍历
+        newObj = []
+        for (let item in target) {
+          console.log("target",target)
+          //递归拷贝数组中的每一项
+          console.log("item",item)
+          console.log("deepClone3(target[item])",deepClone3(target[item]))
+          newObj.push(deepClone3(target[item]));
+        }
+      }
+      //判断当前值是null,直接赋值为null
+      else if (target === null) {
+        newObj = null;
+      }
+      //判断当前值是一个正则表达式对象，则直接赋值
+      else if (target.constructor === RegExp) {
+        newObj = target;
+      }
+      //否则为一个普通的对象，直接for in循环递归遍历复制对象中的每个属性值
+      else {
+        newObj = {};
+        for (let item in target) {
+          newObj[item] = deepClone3(target[item])
+        }
+      }
+    }
+    //如果不是引用类型而是基本类型，那么直接赋值
+    else{
+      newObj=target;
+    }
+    //返回最终结果newObj
+    return newObj;
+  }
+// 深克隆针对对象
+
+  let arr = [
+    { name: 'ccc', age: 18 },
+    { name: 'mmm', age: 16 },
+  ];
+  let arr2 = [];
+  arr2 = deepClone2(arr);
+  arr2[0].age = 16;
+  // console.log(arr);
+  // console.log(arr2);
+
+
+  let obj = { name: 'ccc', age: 18 }
+  let cloneObj = deepClone(obj)
+  obj.age = 16
+
+  let cloneObj2 = deepClone3(arr)
+  console.log("cloneObj2",cloneObj2)
+  // console.log(obj)    // --> { name: 'www', age: 18 }
+  // console.log(cloneObj)   // --> { name: 'ccc', age: 18 }
+
+
+
+</script>
+</html>

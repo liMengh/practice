@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  let a = [
+    {
+      id: 1,
+      name: "601",
+      address: "微棠6栋1单元601"
+    },
+    {
+      id: 2,
+      name: "602",
+      address: "微棠602"
+    },
+    {
+      id: 3,
+      name: "603",
+      address: "微棠603"
+    },
+    {
+      id: 4,
+      name: "604",
+      address: "微棠604"
+    },
+    {
+      id: 5,
+      name: "605",
+      address: "微棠605"
+    },
+  ];
+  let b = [
+    {
+      id: 3,
+    },
+    {
+      id: 5,
+    },
+  ];
+
+//   //数组去重
+//   function unique(arr, nextId) {
+// // 如果新数组的当前元素的索引值 == 该元素在原始数组中的第一个索引，则返回当前元素
+//     let obj = {};
+//     arr = arr.reduce(function (item, next) {
+//       console.log("obj[next.id]" + obj[next.id])
+//       let nextId = obj[next.id] ? "" : obj[next.id] = true;
+//       console.log("nextId:"+ nextId)
+//       if (nextId) {
+//         item.push(next)
+//       }
+//       return item;
+//     }, []);
+//     console.log(arr)
+//     return arr
+//   }
+//
+//   //数组对象，两个数组对象获取相同的部分 交集
+//   function getArrDifSameValue(arr1, arr2) {
+//     let result = [];
+//     for (let i = 0; i < arr2.length; i++) {
+//       let obj = arr2[i];
+//       let id = obj.id;
+//       let isExist = false;
+//       for (let j = 0; j < arr1.length; j++) {
+//         let aj = arr1[j];
+//         let n = aj.id;
+//         if (n === id) {
+//           isExist = true;
+//           break;
+//         }
+//       }
+//       if (isExist) {
+//         result.push(obj);
+//       }
+//     }
+//     return result;
+//   }
+//
+//   const result = getArrDifSameValue(b, a);
+//   for (let i = 0; i < a.length; i++) {
+//     for (let j = 0; j < b.length; j++) {
+//       if (a[i].id === b[j].id) {
+//         a.splice(i, 1)
+//       }
+//     }
+//   }
+//   result.push(...a);
+//   console.log(result)
+
+
+  // let arr1 = [{name:'name1',id:1},{name:'name2',id:2},{name:'name3',id:3}];
+  // let arr2 = [{name:'name1',id:1},{name:'name4',id:4},{name:'name5',id:5}];
+  // let arr3 = arr1.concat(arr2);
+  // let result = [];
+  // var obj = [];
+  // result = arr3.reduce(function(prev, cur, index, arr) {
+  //   console.log(prev, cur);
+  //   obj[cur.id] ? '' : obj[cur.id] = true && prev.push(cur);
+  //   return prev;
+  // }, []);
+  // console.log(result)
+  function hexToString(hex){
+	  let trimedStr = hex.trim();
+	  let rawStr = trimedStr.substr(0,2).toLowerCase() === "0x" ? trimedStr.substr(2) : trimedStr;
+	  let len = rawStr.length;
+	  if(len % 2 !== 0) {
+		  alert("Illegal Format ASCII Code!");
+		  return "";
+	  }
+	  let curCharCode;
+	  let resultStr = [];
+	  for(var i = 0; i < len;i = i + 2) {
+		  curCharCode = parseInt(rawStr.substr(i, 2), 16);
+		  resultStr.push(String.fromCharCode(curCharCode));
+	  }
+	  return resultStr.join("");
+  }
+  console.log(hexToString("56657273696f6e3d33302e37"))
+  for (let i = 0; i < 10; i++) {
+    console.log(i);
+  }
+</script>
+</html>

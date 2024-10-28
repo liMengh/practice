@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/mathjs/11.7.0/math.js"></script>
+    <style>
+        .a{
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<div id="a" class="a">#8ec54e</div>
+<div id="b" class="a">#a9ce5b</div>
+<div id="c" class="a">#c5d768</div>
+<div id="d" class="a">#e1e176</div>
+<div id="e" class="a">#e1e176</div>
+<div id="f" class="a">#fbcd7d</div>
+<div id="g" class="a">#f5ad76</div>
+<div id="h" class="a">#f08d6e</div>
+<div id="i" class="a">#eb6d66</div>
+<div id="j" class="a">#e54c5e</div>
+<script>
+  /**
+   * hsl模式：分为了3个部分，色值（360度圆形的方式呈现），饱和度（100），明度（100），我们就是改变明度
+   * 思路，将rgb转成hsl模式，通过hsl模式将颜色变浅，然后在转成rgb方式
+   * color 传递的颜色，支持rgb与十六进制（可以不带#）的字符串，rgba将自动转成rgb，如果想在rgba的基础上变色，请调两次函数
+   * opacity 阈值：0-100 -》 0 最暗（黑色） 100 最亮（白色）
+   * 返回值：如果是rgb则返回处理后的rgb，如果是十六进制则返回处理后的十六进制
+   */
+  function colorutils(color, opacity){
+    // 将rgb或者十六进制颜色统一转成hsl模式
+    function allhsl(color){
+      // 首先对颜色判断，如果是rgb则走rgb模式，因为#号是特殊字符，网址传参都有限制，所以不判断#
+      if(color.indexOf('rgb') != -1){
+        var start = color.indexOf('(')+1;
+        var startval = color.substr(color.indexOf('(')+1)
+        var end = startval.indexOf(')');
+        var val = startval.substr(0, end)
+        var colorarr = val.split(",");
+        return rgbtohsl(colorarr[0],colorarr[1],colorarr[2])
+      } else {
+        return colorToRgb(color);
+      }
+    }
+    // 然后就是转化成处理后的颜色 如果传rgb就返rgb模式，如果是十六进制就返十六进制
+    function resultRgb(color, opacity){
+      var arr = allhsl(color);
+      var result = hsltorgb(arr[0], arr[1], opacity);
+      if(color.indexOf('rgb') != -1){
+        return "rgb("+result[0]+","+result[1]+","+result[2]+")";
+      } else {
+        return colorToHex(result);
+      }
+    }
+    // 将十六进制转成rgb
+    function colorToRgb(color){
+      if(color.indexOf("#") != -1){
+        color = color.replace("#", "", color)
+      }
+      var color1 = parseInt(color.substr(0, 2), 16);
+      var color2 = parseInt(color.substr(2, 2), 16);
+      var color3 = parseInt(color.substr(4, 2), 16);
+      var str = "rgb("+color1+","+color2+","+color3+")";
+      console.log(str)
+      return rgbtohsl(color1, color2, color3);
+    }
+    // 将rgb转成hsl模式
+    function rgbtohsl(r,g,b){
+      r=math.divide(r, 255);
+      g=math.divide(g, 255);
+      b=math.divide(b, 255);
+
+      var min=Math.min(r,g,b);
+      var max=Math.max(r,g,b);
+      var l= math.divide(math.add(min,max), 2);
+      var difference = math.subtract(max, min);
+      var h,s,l;
+      if(max==min){
+        h=0;
+        s=0;
+      }else{
+        s=l>0.5? math.divide(difference, math.subtract(math.subtract(2.0, max), min)) : math.divide(difference, math.add(max,min));
+        switch(max){
+          case r: h= math.add(math.divide(math.subtract(g, b), difference), (g < b ? 6 : 0));break;
+          case g: h=math.add(2.0, math.divide(math.subtract(b, r), difference));break;
+          case b: h=math.add(4.0, math.divide(math.subtract(r, g), difference));break;
+        }
+        h=Math.round(math.multiply(h, 60));
+      }
+      s=Math.round(math.multiply(s, 100));//转换成百分比的形式
+      l=Math.round(math.multiply(l, 100));
+      return [h,s,l];
+    }
+    // 将hsl模式转成rgb
+    function hsltorgb(h,s,l){
+      var h=math.divide(h, 360);
+      var s=math.divide(s, 100);
+      var l=math.divide(l, 100);
+      var rgb=[];
+
+      if(s==0){
+        rgb=[Math.round(math.multiply(l, 255)),Math.round(math.multiply(l, 255)),Math.round(math.multiply(l, 255))];
+      }else{
+        var q=l>=0.5?math.subtract(math.add(l, s), math.multiply(l, s)):math.multiply(l, math.add(1, s));
+        var p=math.subtract(math.multiply(2, l), q);
+        var tr=rgb[0]=math.add(h, math.divide(1, 3));
+        var tg=rgb[1]=h;
+        var tb=rgb[2]=math.subtract(h, math.divide(1, 3));
+        for(var i=0; i<rgb.length;i++){
+          var tc=rgb[i];
+          if(tc<0){
+            tc=math.add(tc, 1);
+          }else if(tc>1){
+            tc=math.subtract(tc, 1);
+          }
+          switch(true){
+            case (tc<math.divide(1, 6)):
+              tc=math.add(p, math.multiply(math.multiply(math.subtract(q, p), 6), tc));
+              break;
+            case (math.divide(1, 6)<=tc && tc<0.5):
+              tc=q;
+              break;
+            case (0.5<=tc && tc<math.divide(2, 3)):
+              tc=math.add(p, math.multiply(math.subtract(q, p), math.subtract(4, math.multiply(6, tc))));
+              break;
+            default:
+              tc=p;
+              break;
+          }
+          rgb[i]=Math.round(math.multiply(tc, 255));
+        }
+      }
+
+      return rgb;
+    }
+    // rgb转十六进制 color 为[r,b,g]的格式
+    function colorToHex(color){
+      function componentToHex(c) {
+        var hex = c.toString(16);
+        return hex.length == 1 ? "0" + hex : hex;
+      }
+      return "#" + componentToHex(color[0]) + componentToHex(color[1]) + componentToHex(color[2]);
+    }
+    return resultRgb(color, opacity)
+  }
+  a.style.background= colorutils("#8ec54e", 54);
+  b.style.background = colorutils("#a9ce5b",64);
+  c.style.background = colorutils("#c5d768",72);
+  d.style.background = colorutils("#e1e176",59.8);
+  e.style.background = colorutils("#fdea83",59.8);
+  f.style.background = colorutils("#fbcd7d",59.8);
+  g.style.background = colorutils("#f5ad76",59.8);
+  h.style.background = colorutils("#f08d6e",59.8);
+  i.style.background = colorutils("#eb6d66",59.8);
+  j.style.background = colorutils("#e54c5e",59.8);
+  //100 - 10
+  //35
+  //65
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+function findRectCorners(points) {
+    let topLeft = points[0];
+    let topRight = points[0];
+    let bottomLeft = points[0];
+    let bottomRight = points[0];
+
+    for (let i = 1; i < points.length; i++) {
+        const point = points[i];
+
+        if (point.x <= topLeft.x && point.y <= topLeft.y) {
+            topLeft = point;
+        } else if (point.x >= topRight.x && point.y <= topRight.y) {
+            topRight = point;
+        } else if (point.x <= bottomLeft.x && point.y >= bottomLeft.y) {
+            bottomLeft = point;
+        } else if (point.x >= bottomRight.x && point.y >= bottomRight.y) {
+            bottomRight = point;
+        }
+    }
+
+    return { topLeft, topRight, bottomLeft, bottomRight };
+}
+
+// Example usage:
+const points = [
+    { x: 27, y: 71 },
+    { x: 118, y: 26 },
+    { x: 212, y: 156 },
+    { x: 127, y: 209 }
+];
+
+const corners = findRectCorners(points);
+console.log(corners.topLeft, corners.topRight, corners.bottomLeft, corners.bottomRight);
+console.log("corners.topLeft",corners.topLeft)
+console.log("corners.topRight",corners.topRight)
+console.log("corners.bottomLeft",corners.bottomLeft)
+console.log("corners.bottomRight",corners.bottomRight)
+
+</script>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div></div>
+</body>
+<script src="./crypto/crypto-min-js.js"></script>
+<script>
+  function getDAesString(encrypted,key,iv){
+    var key = CryptoJS.enc.Utf8.parse(key);
+    var iv = CryptoJS.enc.Utf8.parse(iv);
+    var decrypted = CryptoJS.AES.decrypt(encrypted,key,
+      {
+        iv:iv,
+        mode:CryptoJS.mode.CBC,
+        padding:CryptoJS.pad.Pkcs7
+      });
+    return decrypted.toString(CryptoJS.enc.Utf8);
+  }
+  function getAES(data){
+    var key = '8w091ql5l2tt6qxj';
+    var iv = 'dB1rD0kI2eE0cB1p';
+    var encrypted = getAesString(data,key,iv);
+    return encrypted;
+  }
+
+  function getDAes(data){
+    var key = '8w091ql5l2tt6qxj';
+    var iv = 'dB1rD0kI2eE0cB1p';
+    var decryptedStr = getDAesString(data,key,iv);
+    return decryptedStr;
+  }
+  console.log(getDAes("Bj7/Xk4GelqQjPz0QOyT5khEaSIoTcN2zIU/G49MtzoKJRSS7n4wxUeIted+G2rijW5JVrwcFOJKfmvuI2rynhjyF+g1f8YmldK7mGbx8Eg="));
+  console.log(getDAes("3Y9IGV0vCyUD4XbMZihV7A+5je8iWGs7Gp3tLbehJJo2fveSlLt59X7Yn8PLI0+Vh2omKRCCKodxrZ5hocpIFQ=="));
+</script>
+</html>

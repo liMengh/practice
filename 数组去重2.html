@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div>
+  <img style="width: 200px;height: 200px" src="https://staticoss.aphoto.cn/user/2022/7/62e1fffc60b27e80fdffb847.tiff" alt="">
+  数组去重
+</div>
+</body>
+<script>
+window.addEventListener("online",function(){
+  alert("网络连接了")
+})
+window.addEventListener("offline",function(){
+  alert('网络断开了')
+})
+  let a = [
+    {
+      id: 1,
+    },
+    {
+      id: 3,
+    },
+    {
+      id: 3,
+    },
+    {
+      id: 3,
+    },
+    {
+      id: 5,
+    },
+  ];
+  let b = [
+    {
+      id: 3,
+    },
+    {
+      id: 5,
+    },
+  ];
+  let c = [1, 2, 3, 4, 5, 6, "6", 6, 7, "7", 7, 8, "8", 8];
+
+  //数组去重
+  function unique(arr, nextSign) {
+    let obj = {};
+    arr = arr.reduce((item, next) => {
+      let nextId = obj[next[nextSign]] ? false : obj[next[nextSign]] = true;
+      if (nextId) {
+        item.push(next);
+      }
+      return item;
+    }, []);
+    return arr;
+  }
+
+  console.log(unique(a, "id"));
+
+  function unique2(arr, nextId) {
+    let obj = {}; //临时存储
+    arr = arr.reduce((item, next) => {
+      console.log("obj[next[nextId]]:", obj[next[nextId]]);
+      let nextItem = obj[next[nextId]] ? false : obj[next[nextId]] = true;
+      console.log("nextItem:", nextItem);
+      if (nextItem) {
+        item.push(next);
+      }
+      console.log("item:", item);
+      return item;
+    }, []);
+    return arr;
+  }
+
+  console.log(unique2(a, "id"));
+
+  //利用对象储存去重
+  function unique3(arr) {
+    let obj = {};
+    arr = arr.reduce((item, next) => {
+      console.log("item:", item);
+      console.log("next:", next);
+      let isPush = obj[typeof next + next] ? false : (obj[typeof next + next]) = true;
+      if (isPush) {
+        item.push(next);
+      }
+      return item;
+    }, []);
+    return arr;
+  }
+
+  //利用indexOf简化内层的循环
+  function unique4(arr) {
+    let res = [];
+    for (let i = 0, len = arr.length; i < len; i++) {
+      let current = arr[i];
+      if (res.indexOf(current) === -1) {
+        res.push(current);
+      }
+    }
+    return res;
+  }
+
+  function unique5(arr){
+    let obj = {};
+    arr = arr.reduce((item,next) => {
+      let isPush = obj[typeof next + next] ? false : (obj[typeof next + next]) = true;
+      if (isPush){
+        item.push(next);
+      }
+      return item;
+    },[]);
+    return arr;
+  }
+
+  function unique6(arr){
+    let obj = {};
+    arr = arr.reduce((item,next) => {
+      let isPush = obj[typeof next + next] ? false : obj[typeof next + next] = true;
+      if (isPush){
+        item.push(next);
+      }
+      return item;
+    },[])
+    return arr;
+  }
+
+  function unique6_1(arr){
+    let obj = {};
+    arr = arr.reduce((item,next) => {
+      let isPush = obj[typeof next + next] ? false : obj[typeof next + next] = true;
+      if (isPush){
+        item.push(next);
+      }
+      return item;
+    },[])
+    return arr;
+  }
+
+  function unique7(arr){
+    let obj = {};
+    arr = arr.reduce((item,next)=>{
+      let isPush = obj[next] ? false : obj[next] = true;
+      if (isPush){
+        item.push(next);
+      }
+      return item;
+    },[])
+    return arr;
+  }
+
+  function unique8(arr){
+    let obj = {};
+    arr = arr.reduce((item,next) => {
+      let isPush = obj[next] ? false : obj[next] = true;
+      if (isPush){
+        item.push(next);
+      }
+      return item;
+    },[])
+    return arr;
+  }
+
+  console.log("unique7:",unique7(c));
+  console.log( [3, 15, 8, 29, 102, 22].sort((a,b) => {return b - a}))
+</script>
+</html>

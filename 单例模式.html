@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>单例模式</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+  const mySingleton = (function () {
+    //实例保持了Singleton的一个引用
+    let instance;
+    function init() {
+      //Singleton
+      //私有方法和变量
+      function privateMethod() {
+        console.log("I am private");
+      }
+      let privateVariable = "I also private";
+      let privateRandomNumber = Math.random();
+      return {
+        //公有方法和变量
+        publicMethod: function () {
+          console.log("The public can see me!");
+        },
+        publicProperty: "I am also public",
+        getRandomNumber: function () {
+          return privateRandomNumber;
+        }
+      };
+    }
+    return {
+      //获取Singleton的实例，如果存在就返回，不存在就创建新实例
+      getInstance: function () {
+        if (!instance){
+          instance = init();
+        }
+        return instance;
+      }
+    };
+  })();
+  // let singleA = mySingleton.getInstance();
+  // console.log(singleA);
+
+  // 单例模式示例代码
+  class Singleton {
+      constructor() {
+          if (!Singleton.instance) {
+              Singleton.instance = this;
+          }
+          return Singleton.instance;
+      }
+
+      createInstance() {
+          return { name: "example" };
+      }
+
+      getInstance() {
+          if (!Singleton.instance) {
+              Singleton.instance = this.createInstance();
+          }
+          return Singleton.instance;
+      }
+  }
+
+  // 使用示例
+  const instance1 = new Singleton();
+  const instance2 = new Singleton();
+  console.log("instance1",instance1.createInstance().name)
+  console.log(instance1 === instance2); // true
+</script>
+</html>
