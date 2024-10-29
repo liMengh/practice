@@ -22,5 +22,25 @@
         return a.value - b.value
     }
     console.log(arr.sort(compareNumbers))
+
+    const A = [
+      { id: 3, name: 'C' },
+      { id: 1, name: 'A' },
+      { id: 2, name: 'B' }
+    ];
+
+    const B = [
+      { id: 1, order: 2 },
+      { id: 2, order: 3 },
+      { id: 3, order: 1 }
+    ];
+    const sortedA = A.sort((a, b) => {
+      const indexA = B.findIndex(item => item.id === a.id);
+      const indexB = B.findIndex(item => item.id === b.id);
+      return indexA - indexB;
+    });
+
+    console.log(sortedA);
+
 </script>
 </html>
