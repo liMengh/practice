@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  function validateFileName(fileName) {
+    // 定义正则表达式：匹配任意剧名-第n集，n为1到多位的数字
+    const regex = /^(.+)-第(\d+)集$/;
+
+    // 测试文件名是否符合正则表达式
+    const match = fileName.match(regex);
+
+    if (match) {
+      const showName = match[1]; // 获取剧名
+      const episodeNumber = parseInt(match[2], 10); // 获取并解析第n集的数字
+      return {
+        isValid: true,
+        showName: showName,
+        episode: episodeNumber
+      };
+    } else {
+      return { isValid: false };
+    }
+  }
+
+  // 测试用例
+  const fileName1 = "某个剧名-第5集";
+  const fileName2 = "远端剧名-第10集";
+  const fileName3 = "Another Show-第2集";
+  const fileName4 = "远端剧名-第X集"; // 不符合规则
+
+
+  // （计划价值）是根据项目计划计算的预期成本
+  const PV = 20; //1000
+  // （挣得价值）是实际完成工作的预算成本
+  const EV = 26; //450
+  // （实际成本）是实际已花费的成本
+  const AC = 23;//500
+
+  const SPI = EV / PV;
+  const CPI = EV / AC;
+
+  // 完工预算
+  const BAC = 100;
+  // 完工预测
+  let EAC;
+  // 非典型（基于目前绩效简单计算）
+  EAC = AC + ( BAC - EV )
+  // 典型
+  EAC = BAC / CPI;
+
+  // 完工估算
+  let ETC;
+
+  // 基于当前成本绩效的预测
+  ETC = (BAC - EV) / CPI;
+  // 按当前进度和成本的总和
+  ETC = EAC - AC;
+
+  console.log("SPI",SPI)
+  console.log("CPI",CPI)
+
+
+  console.log(validateFileName(fileName1)); // { isValid: true,  showName: '某个剧名', episode: 5 }
+  console.log(validateFileName(fileName2)); // { isValid: true, showName: '远端剧名', episode: 10 }
+  console.log(validateFileName(fileName3)); // { isValid: true, showName: 'Another Show', episode: 2 }
+  console.log(validateFileName(fileName4)); // { isValid: false }
+
+</script>
+</html>
