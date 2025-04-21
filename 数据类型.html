@@ -19,5 +19,12 @@ console.log(typeof(a + ""));
 console.log("typeof(null):",typeof(null));
 console.log(typeof(typeof(null)));
 console.log(typeof(typeof({})));
+
+var mysym = Symbol( "my own symbol" );
+console.log(mysym);              // Symbol(my own symbol)
+console.log(mysym.toString())  // "Symbol(my own symbol)"
+console.log(typeof mysym);       // "symbol"
+
+
 </script>
 </html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="demo">
+  <ul id="father">
+    <li>我是0号,我后面还有1号、2号、3号、4号、5号</li>
+  </ul>
+</div>
+
+</body>
+<script>
+  const ulEle = document.getElementById("father");
+  let arr = [];
+  setTimeout( () => {
+    arr = ["我是0号,我后面还有1号，2号，3号，4号，5号", "我是2号", "我是3号", "我是4号", "我是5号"]; // 我是动态获取的
+    arr.forEach(element => {
+      const childNode = document.createElement('li');
+      childNode.innerText = element;
+      ulEle.appendChild(childNode);// 每一次都会引起重排（重排会引起重绘）
+    })
+  },1000)
+
+</script>
+</html>
