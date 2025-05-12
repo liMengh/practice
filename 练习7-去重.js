@@ -24,12 +24,13 @@ function unique1() {
     let arr1DeWeight = [];
     for (let i = 0; i < arr1.length; i++) {
         const isPush = arr1DeWeight.includes(arr1[i]);
-        if (!isPush){
+        if (!isPush) {
             arr1DeWeight.push(arr1[i]);
         }
     }
     return arr1DeWeight
 }
+
 console.log("arr1DeWeight",unique1())
 function unique2() {
     let obj = {};
