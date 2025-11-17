@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .container {
+      width: 300px;
+      height: 300px;
+      overflow: auto;
+      border: 1px solid;
+      margin: 100px auto;
+    }
+
+    .item {
+      height: 29px;
+      line-height: 30px;
+      text-align: center;
+      border-bottom: 1px solid #aaa;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <div class="container" ref="container">
+<!--    <div class="item">{{loadText+"第"+pageNum+"页"}}</div>-->
+    <div v-for="(item, index) in list" :key="index" class="item">{{item}}</div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      scrollHeight: 0,
+      list: [],
+      loadText:"加载中...",
+      pageSize:10,
+      pageNum:1,
+    },
+    mounted() {
+      this.initData();
+      const container = this.$refs.container;
+      //这里的定时是为了列表首次渲染后获取scrollHeight并滑动到底部。
+      setTimeout(() => {
+        this.scrollHeight = container.scrollHeight;
+        container.scrollTo(0, this.scrollHeight);
+      }, 10);
+      container.addEventListener('scroll', (e) => {
+        //这里的2秒钟定时是为了避免滑动频繁，节流
+        setTimeout(() => {
+          if(this.list.length>=90){
+            this.loadText = "加载完成";
+            return;
+          }
+          //滑到顶部时触发下次数据加载
+          if (e.target.scrollTop == 0) {
+            //将scrollTop置为10以便下次滑到顶部
+            e.target.scrollTop = 10;
+            //加载数据
+            this.initData();
+            //这里的定时是为了在列表渲染之后才使用scrollTo。
+            setTimeout(() => {
+              e.target.scrollTo(0, this.scrollHeight - 30);//-30是为了露出最新加载的一行数据
+            }, 100);
+          }
+        }, 2000);
+      });
+    },
+    methods:{
+      //初始数据
+      initData() {
+        for (var i = 20; i > 0; i--) {
+          this.list.unshift(i)
+        }
+        this.pageNum++;
+      }
+    }
+  })
+</script>
+</body>
+</html>

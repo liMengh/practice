@@ -9,12 +9,54 @@
 </body>
 <script>
 let arr = [
-  {id: 1, name: "部门1", pid: 0},
-  {id: 2, name: "部门2", pid: 1},
-  {id: 3, name: "部门3", pid: 1},
-  {id: 4, name: "部门4", pid: 3},
-  {id: 5, name: "部门5", pid: 4},
-  {id: 6, name: "部门5", pid: 0},
+    {
+        "checked":"",
+        "id":"25",
+        "isOpen":false,
+        "name":"开发部",
+        "open":false,
+        "pId":"24"
+    },
+    {
+        "checked":"",
+        "id":"26",
+        "isOpen":false,
+        "name":"运营部",
+        "open":false,
+        "pId":"24"
+    },
+    {
+        "checked":"",
+        "id":"27",
+        "isOpen":false,
+        "name":"战略部",
+        "open":false,
+        "pId":"24"
+    },
+    {
+        "checked":"",
+        "id":"28",
+        "isOpen":false,
+        "name":"测试1",
+        "open":false,
+        "pId":"25"
+    },
+    {
+        "checked":"",
+        "id":"29",
+        "isOpen":false,
+        "name":"测试2",
+        "open":false,
+        "pId":"25"
+    },
+    {
+        "checked":true,
+        "id":"0",
+        "isOpen":true,
+        "name":"顶级",
+        "open":true,
+        "pId":"0"
+    }
 ]
 
 function arrayToTree(items) {
@@ -30,7 +72,7 @@ function arrayToTree(items) {
     const id = item.id;
     const pid = item.pid;
     const treeItem = itemMap[id];
-    if (pid === 0) {
+    if (pid == 0) {
       result.push(treeItem);
     } else {
       if (!itemMap[pid]) {
@@ -45,7 +87,7 @@ function arrayToTree(items) {
   return result;
 }
 
-// console.log(JSON.stringify(arrayToTree(arr)))
+console.log(arrayToTree(arr))
 
 var arr1 = [3, 44, 38, 5, 47, 15, 36, 26, 27, 2, 46, 4, 19, 50, 48];
 
@@ -63,5 +105,6 @@ function bubbleSort(arr) {
   return arr;
 }
 console.log("bubbleSort",bubbleSort(arr1))
+
 </script>
 </html>

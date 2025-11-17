@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>复制 MathJax 公式</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<p>点击公式复制 LaTeX 代码：</p>
+<p class="math" data-original-content="E = mc^2">\[ E = mc^2 \]</p>
+<p class="math" data-original-content="\frac{a}{b}">\[ \frac{a}{b} \]</p>
+
+<h1>三角形面积计算</h1>
+
+<p>面积公式为 \(\frac{1}{2} ab \sin C\)，其中 \(a = 2\)，\(b = 3\)，\(\cos C = \frac{1}{3}\)。</p>
+
+<p>推导过程：</p>
+\[
+\begin{align}
+\sin^2 C &= 1 - \cos^2 C \\
+&= 1 - \left( \frac{1}{3} \right)^2 \\
+&= \frac{8}{9}, \text{ 所以 } \sin C = \frac{2\sqrt{2}}{3}.
+\end{align}
+\]
+
+<p>最终面积：</p>
+\[
+\text{面积} = \frac{1}{2} \times 2 \times 3 \times \frac{2\sqrt{2}}{3} = 2\sqrt{2}.
+\]
+
+<script>
+    // 复制函数
+    async function copyText(text) {
+        try {
+            await navigator.clipboard.writeText(text);
+            alert(`已复制: ${text}`);
+        } catch (err) {
+            console.error('复制失败:', err);
+        }
+    }
+
+    // 绑定点击事件
+    document.querySelectorAll('.math').forEach(formula => {
+        formula.addEventListener('click', () => {
+            const latex = formula.getAttribute('data-original-content');
+            copyText(latex);
+        });
+    });
+</script>
+</body>
+</html>

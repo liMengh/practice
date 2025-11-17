@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>逐字显示 + 公式渲染</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        #output {
+            font-family: monospace;
+            white-space: pre-wrap;
+            padding: 1em;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            max-width: 700px;
+            margin: 40px auto;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .cursor {
+            display: inline-block;
+            width: 1ch;
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="output"></div>
+
+<script>
+    const message = `下面是标准差公式：\n\n$$\\sigma = \\sqrt{ \\frac{1}{N} \\sum_{i=1}^N (x_i - \\mu)^2 }$$`;
+
+    const output = document.getElementById("output");
+    const cursor = document.createElement("span");
+    cursor.className = "cursor";
+    cursor.textContent = "▍";
+    output.appendChild(cursor);
+
+    let index = 0;
+
+    function typeWriter() {
+        if (index < message.length) {
+            cursor.insertAdjacentText("beforebegin", message[index]);
+            index++;
+            setTimeout(typeWriter, 40);
+        } else {
+            cursor.remove();
+            // 渲染公式
+            MathJax.typeset();
+        }
+    }
+
+    typeWriter();
+</script>
+
+</body>
+</html>

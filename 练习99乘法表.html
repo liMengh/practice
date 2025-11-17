@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box2{
+            display: flex;
+            width: 100%;
+        }
+        span{
+            display: block;
+            width: 100px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>
+</body>
+<script>
+    const box = document.getElementById("box");
+
+    function initData() {
+        for (let i = 1; i <= 9; i++){
+            const div = document.createElement("div");
+            div.className = "box2"
+            for (let j = 1; j <= i; j++){
+                const span = document.createElement("span");
+                span.innerText = ` ${j} * ${i} = ${i*j}`;
+                div.appendChild(span)
+                console.log("i * j",` ${j} * ${i} = ${i*j}`)
+            }
+            box.appendChild(div);
+        }
+    }
+    initData();
+</script>
+</html>

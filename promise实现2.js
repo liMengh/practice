@@ -12,6 +12,7 @@ class MyPromise {
 
         const resolve = (value) => {
             if (this.state === PENDING) {
+                //执行微任务
                 queueMicrotask(() => {
                     this.state = FULFILLED;
                     this.value = value;

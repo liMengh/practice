@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    const getUrlParams = (url) => {
+        const params = {};
+        const urlParts = url.split('?');
+        if (urlParts.length > 1) {
+            const query = urlParts[1];
+            const pairs = query.split('&');
+            for (let i = 0; i < pairs.length; i++) {
+                const keyValue = pairs[i].split('=');
+                const key = decodeURIComponent(keyValue[0]);
+                const value = decodeURIComponent(keyValue[1] || '');
+                if (key) {
+                    if (params[key] !== undefined) {
+                        if (!Array.isArray(params[key])) {
+                            params[key] = [params[key]];
+                        }
+                        params[key].push(value);
+                    } else {
+                        params[key] = value;
+                    }
+                }
+            }
+        }
+        return params;
+    }
+    let url = 'https://sodatvglobal.onelink.me/IDbH?pid=metaweb_int&c=%7B%7Bcampaign.name%7D%7D&af_c_id=%7B%7Bcampaign.id%7D%7D&af_adset=%7B%7Badset.name%7D%7D&af_adset_id=%7B%7Badset.id%7D%7D&af_ad=%7B%7Bad.name%7D%7D&af_ad_id=%7B%7Bad.id%7D%7D&ttclid=null&deep_link_value=40000288_100028753&af_force_deeplink=true&af_dp=sodatv%3A%2F%2Fvideo%3Ftv_id=40000288&series_seq=100028753&c=tdpy6fFTX3nJNJjs_40000288_FB000001_fb_100028753&bid=40000288&cid=100028753&chid=FB000001&media=fb&cr_content=%7B%7Bcampaign.id%7D%7D&cr_campaign=%7B%7Bcampaign.name%7D%7D&h5Uid=tdpy6fFTX3nJNJjs&deep_link_sub5=%7B%22cr_campaign%22%3A%22%7B%7Bcampaign.name%7D%7D%22%2C%22cr_content%22%3A%22%7B%7Bcampaign.id%7D%7D%22%2C%22h5Uid%22%3A%22tdpy6fFTX3nJNJjs%22%7D'
+    console.log("getUrlParams",getUrlParams(url))
+</script>
+</html>

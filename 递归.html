@@ -1,71 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
 
 </body>
 <script type="text/javascript">
-  // let fib = function(n) {
-  //   if(n <= 2) {
-  //     return 1
-  //   }
-  //   return fib(n-2) + fib(n-1)
-  // }
+    // let fib = function(n) {
+    //   if(n <= 2) {
+    //     return 1
+    //   }
+    //   return fib(n-2) + fib(n-1)
+    // }
 
-//   let A = [
-//     {
-//       code:1,
-//       name:'1'
-//     },
-//     {
-//       code:2,
-//       name:'2'
-//     },
-//     {
-//       name:'3'
-//     },
-//   ]
-//   let b = [
-//     {
-//       code:1,
-//       name:'1'
-//     },
-//   ]
-//
-//   B=A.filter((item) => b.find((bItem => {
-//     if (item.code){
-//       return bItem.code === item.code;
-//     }else {
-//       return true;
-//     }
-//   })));
-//   // console.log(B)
-//   // 示例数组 A 和 B
-//   let arrayA = [
-//     { id: 1, children: [{ id: 11 }, { id: 12 }] },
-//     { id: 2, children: [{ id: 21 }, { id: 22 }] }
-//   ];
-//
-//   let arrayB = [
-//     { id: 1, children: [{ id: 12 }] },
-//     { id: 2, children: [{ id: 21 }, { id: 23 }] }
-//   ];
-//   function filterChildren(parentA, parentB) {
-//     if (!parentA.children || !parentB.children) {
-//       return parentA;
-//     }
-//
-//     parentA.children = parentA.children.filter(childA =>
-//             !parentB.children.some(childB => JSON.stringify(childA) === JSON.stringify(childB))
-//     );
-//
-//     parentA.children.forEach(childA => filterChildren(childA, parentB));
-//
-//     return parentA;
-//   }
-// console.log(filterChildren(arrayA,arrayB))
+    //   let A = [
+    //     {
+    //       code:1,
+    //       name:'1'
+    //     },
+    //     {
+    //       code:2,
+    //       name:'2'
+    //     },
+    //     {
+    //       name:'3'
+    //     },
+    //   ]
+    //   let b = [
+    //     {
+    //       code:1,
+    //       name:'1'
+    //     },
+    //   ]
+    //
+    //   B=A.filter((item) => b.find((bItem => {
+    //     if (item.code){
+    //       return bItem.code === item.code;
+    //     }else {
+    //       return true;
+    //     }
+    //   })));
+    //   // console.log(B)
+    //   // 示例数组 A 和 B
+    //   let arrayA = [
+    //     { id: 1, children: [{ id: 11 }, { id: 12 }] },
+    //     { id: 2, children: [{ id: 21 }, { id: 22 }] }
+    //   ];
+    //
+    //   let arrayB = [
+    //     { id: 1, children: [{ id: 12 }] },
+    //     { id: 2, children: [{ id: 21 }, { id: 23 }] }
+    //   ];
+    //   function filterChildren(parentA, parentB) {
+    //     if (!parentA.children || !parentB.children) {
+    //       return parentA;
+    //     }
+    //
+    //     parentA.children = parentA.children.filter(childA =>
+    //             !parentB.children.some(childB => JSON.stringify(childA) === JSON.stringify(childB))
+    //     );
+    //
+    //     parentA.children.forEach(childA => filterChildren(childA, parentB));
+    //
+    //     return parentA;
+    //   }
+    // console.log(filterChildren(arrayA,arrayB))
+</script>
+
+
+<!-- 在 website.html 中添加以下脚本 -->
+<script>
+    const getUrlParams = (url) => {
+        const params = {};
+        const urlParts = url.split('?');
+        if (urlParts.length > 1) {
+            const query = urlParts[1];
+            const pairs = query.split('&');
+            for (let i = 0; i < pairs.length; i++) {
+                const keyValue = pairs[i].split('=');
+                const key = decodeURIComponent(keyValue[0]);
+                const value = decodeURIComponent(keyValue[1] || '');
+                if (key) {
+                    if (params[key] !== undefined) {
+                        if (!Array.isArray(params[key])) {
+                            params[key] = [params[key]];
+                        }
+                        params[key].push(value);
+                    } else {
+                        params[key] = value;
+                    }
+                }
+            }
+        }
+        return params;
+    }
+    const urlParams = getUrlParams(window.location.href);
+    console.log("urlParams",urlParams)
+    const {tv_id, series_seq, c} = urlParams;
+    <!-- 在 website.html 中添加以下脚本 -->
+    document.addEventListener('DOMContentLoaded', function () {
+        // 检测是否为 iOS 设备
+        const isiOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+
+        if (isiOS) {
+            // 尝试打开应用
+            const appUrl = `sodatv://video?tv_id=${tv_id}&series_seq=${series_seq}&c=${c}`; // 替换为您的应用 URL Scheme
+            const appStoreUrl = 'https://apps.apple.com/app/id6739734548?mt=8';
+
+            const startTime = Date.now();
+
+            // 尝试打开应用
+            window.location.href = appUrl;
+
+            // 如果 2 秒内没有返回，则认为应用未安装，跳转到 App Store
+            setTimeout(function () {
+                if (Date.now() - startTime < 2000) {
+                    window.location.href = appStoreUrl;
+                }
+            }, 500);
+        }
+    });
+</script>
+
+<script>
+    /*<![CDATA[*/
+    const page_id = 14;
+    const app_play_id = 40000021;
+    const app_play_series = 100017021;
+
+    /*]]>*/
+
+    function urlencoded(str) {
+        return encodeURIComponent(str).replace(/'/g, "%27").replace(/%26/g, "&").replace(/%3D/g, "=");
+    }
+
+    setTimeout(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const p1 = urlParams.get("utm_campaign");
+        const p2 = urlParams.get("utm_content");
+        const p3 = urlParams.get("ad_group_name");
+        const p4 = urlParams.get("ad_group_id");
+        const p5 = urlParams.get("ad_name");
+        const p6 = urlParams.get("ad_id");
+        const p7 = urlParams.get("fbclid");
+
+        let url = buildURL(p1, p2, p3, p4, p5, p6);
+        // 构建 URL Scheme
+        let scheme = 'sodatv://video?tv_id=' + app_play_id + '&series_seq=' + app_play_series + "&c=" + that.getChainId();
+        let href = url + '&fbclid=' + p7 + '&deep_link_value=' + app_play_id + '_' + app_play_series + '&af_force_deeplink=true&af_dp=' + urlencoded(scheme);
+        console.log(href)
+        // 尝试打开 App
+        window.location.href = href
+    }, 500)
+
+    function buildURL(p1, p2, p3, p4, p5, p6) {
+        let c = p1;
+        if (!c) {
+            c = "";
+        }
+        let af_c_id = p2;
+        if (!p2) {
+            af_c_id = "";
+        }
+
+        let af_adset = p3;
+        if (!p3) {
+            af_adset = "";
+        }
+
+        let af_adset_id = p4;
+        if (!p4) {
+            af_adset_id = "";
+        }
+
+        let af_ad = p5;
+        if (!p5) {
+            af_ad = "";
+        }
+
+        let af_ad_id = p6;
+        if (!p6) {
+            af_ad_id = "";
+        }
+
+        // build a tracker URL
+        let params = {c, af_c_id, af_adset, af_adset_id, af_ad, af_ad_id};
+        return "https://sodatvglobal.onelink.me/IDbH?pid=metaweb_int&" + Object.keys(params).map((key) => key + "=" + encodeURIComponent(params[key])).join("&");
+    }
+
+
+    // https://sodatvglobal.onelink.me/IDbH?pid=metaweb_int&c=%7B%7Bcampaign.name%7D%7D&af_c_id=%7B%7Bcampaign.id%7D%7D&af_adset=&af_adset_id=&af_ad=&af_ad_id=&fbclid=null&deep_link_value=40000014_100016667&af_force_deeplink=true&af_dp=sodatv%3A%2F%2Fvideo%3F&tv_id=40000014&series_seq=100016667&c=DCMJYRRxbCbKC2Rr_40000014_FB000001_fb_100016667&ad_group_name=null&ad_group_id=null&ad_id=null&ad_name=null&ad_group_name=null&ad_group_id=null&ad_id=null&ad_name=null
+    // https://sodatvglobal.onelink.me/IDbH?pid=metaweb_int&c=%7B%7Bcampaign.name%7D%7D&af_c_id=%7B%7Bcampaign.id%7D%7D&af_adset=%7B%7Badset.name%7D%7D&af_adset_id=%7B%7Badset.id%7D%7D&af_ad=%7B%7Bad.name%7D%7D&af_ad_id=%7B%7Bad.id%7D%7D&fbclid=null&deep_link_value=40000021_100017021&af_force_deeplink=true&af_dp=sodatv%3A%2F%2Fvideo%3Ftv_id=40000021&series_seq=100017021
+    // https://sodatvglobal.onelink.me/IDbH?pid=metaweb_int&c=%7B%7Bcampaign.name%7D%7D&af_c_id=%7B%7Bcampaign.id%7D%7D&af_adset=&af_adset_id=&af_ad=&af_ad_id=&fbclid=null&deep_link_value=40000014_100016667&af_force_deeplink=true&af_dp=sodatv%3A%2F%2Fvideo%3Ftv_id=40000014&series_seq=100016667&c=DCMJYRRxbCbKC2Rr_40000014_FB000001_fb_100016667&ad_group_name=null&ad_group_id=null&ad_id=null&ad_name=null&ad_group_name=null&ad_group_id=null&ad_id=null&ad_name=null
+
+    // https://sodatvglobal.onelink.me/IDbH?pid=metaweb_int&c={{campaign.name}}&af_c_id={{campaign.id}}&af_adset=&af_adset_id=&af_ad=&af_ad_id=&fbclid=null&deep_link_value=40000014_100016667&af_force_deeplink=false&af_dp=sodatv://video?tv_id=40000014&series_seq=100016667&c=DCMJYRRxbCbKC2Rr_40000014_FB000001_fb_100016667&ad_group_name=null&ad_group_id=null&ad_id=null&ad_name=null&ad_group_name=null&ad_group_id=null&ad_id=null&ad_name=null
+    // https://sodatvglobal.onelink.me/IDbH?pid=metaweb_int&c=FB_SODA_W2A_FB000001_40000014_OSEN0017_100016667_EN_LST_AND_T1_autoNew_LLL&af_c_id=17497191134&af_adset=&af_adset_id=&af_ad=&af_ad_id=&fbclid=null&deep_link_value=40000014_100016667&af_force_deeplink=true&af_dp=sodatv%3A%2F%2Fvideo%3Ftv_id=40000014&series_seq=100016667&c=DCMJYRRxbCbKC2Rr_40000014_FB000001_fb_100016667&ad_group_name=null&ad_group_id=null&ad_id=null&ad_name=null&ad_group_name=null&ad_group_id=null&ad_id=null&ad_name=null
+    // [sodaTV]https://www.sodatvclub.com?c=DCMJYRRxbCbKC2Rr_40000012_FB000001_fb_100016567&lpat=/T8yKxZgk9JjMQX+A0ak0kWM//V9VHTGfqVvLO3MGW58x1nZYKrUWZt26PPa3DT/IggyS/U6+s6rtNtvArMAh3IoBeu5OfNjBc79FwFy8LHicyzfOdtSjhk8yVvkvbp1jIIwOub2SWuXxdLvVw5rIw== SA9527
+
 </script>
 </html>

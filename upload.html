@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input id="file" type="file" />
+    <button id="upload">上传</button>
+    <script src="https://gosspublic.alicdn.com/aliyun-oss-sdk-6.18.0.min.js"></script>
+    <script>
+      const client = new OSS({
+        // yourRegion填写Bucket所在地域。以华东1（杭州）为例，yourRegion填写为oss-cn-hangzhou。
+        region: "oss-cn-qingdao",
+        authorizationV4: true,
+        // 从STS服务获取的临时访问密钥（AccessKey ID和AccessKey Secret）。
+        accessKeyId: "STS.NY3UvhhQUVknidP1phxNNttnt",
+        accessKeySecret: "4UjkH7GXJaewE7rCWhraUhbk7zHF2LmyZFe614NZSdGj",
+        // 从STS服务获取的安全令牌（SecurityToken）。
+        stsToken: "CAIS5AJ1q6Ft5B2yfSjIr5qGHszchY504amFa0Lh1XA9dMFim7HFljz2IHhMeHhoAOsYsfg0nG1T6P4YlqpoV4Qd8L1h8CQrvPpt6gqET9frqq7ctM4Y6vCMHWyUFGS0vqv7aPn4S9XwY+qkb0u++AZ43br9c0fFPTmiKobbsYN7Sd4VUwKkFxAkYu1bPQx/ssQXGGLMPPK2SH7Qj3HXEVBjt3gy6y924r/txdaHuFiMzg/oyuYTqID4ZcH1NZY1Z8clCY/pgLUoMejjqHcNtkUTrPYu1/QdqGue5I2nbgMPs0ncAY396cZyKQJ1XK8+FpNfoeL0/f8C4bSLy9Wvkk0TYr0OC3mEGtj62qXeEeauLc0p0QlAmcxuW7plX7uCUGNMCRpzXGsi8ArypfT/FxdlzL2On0sLLMwIhpOZCsnjnuh/mvFOlH6jpuHBBEP0aO66ugVzV/FxEQVGfnB50wQm8TfRLWQkGxqAAS4ARx6IvQHQ5a03VizKF489+hfAbBA7cZRURF5lAQI6bICRUMrNxxv75VXCdOrYJsL4K/M/qt2wYKVExudL0vBCIugx5cgOj69gz4un+vXbXmMaWW8pnPHwZw3e9tycqHdcZ0oj8myu4yPWfWVZpTr+nuefnycOP1mmH0I/L7NMIAA=",
+        // 填写Bucket名称。
+        bucket: "zhangla",
+      });
+
+      // 从输入框获取file对象，例如<input type="file" id="file" />。
+      let data;
+      // 创建并填写Blob数据。
+      //const data = new Blob(['Hello OSS']);
+      // 创建并填写OSS Buffer内容。
+      //const data = new OSS.Buffer(['Hello OSS']);
+
+      const upload = document.getElementById("upload");
+
+      async function putObject(data) {
+        try {
+          // 填写Object完整路径。Object完整路径中不能包含Bucket名称。
+          // 您可以通过自定义文件名（例如exampleobject.txt）或文件完整路径（例如exampledir/exampleobject.txt）的形式实现将数据上传到当前Bucket或Bucket中的指定目录。
+          // data对象可以自定义为file对象、Blob数据或者OSS Buffer。
+          const options = {
+            meta: { temp: "demo" },
+            mime: "json",
+            headers: { "Content-Type": "text/plain" },
+          };
+          const result = await client.put("19271382204416/examplefile.txt", data, options);
+          console.log(result);
+        } catch (e) {
+          console.log(e);
+        }
+      }
+
+      upload.addEventListener("click", () => {
+        const data = file.files[0];
+        putObject(data);
+      });
+    </script>
+  </body>
+</html>

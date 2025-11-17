@@ -28,7 +28,7 @@ window.addEventListener("offline",function(){
       id: 3,
     },
     {
-      id: 3,
+      id: "3",
     },
     {
       id: 5,
@@ -165,5 +165,48 @@ window.addEventListener("offline",function(){
 
   console.log("unique7:",unique7(c));
   console.log( [3, 15, 8, 29, 102, 22].sort((a,b) => {return b - a}))
+
+
+function unique9(arr, nextId) {
+  let obj = {}; //临时存储
+  arr = arr.reduce((item, next) => {
+    console.log("obj[next[nextId]]:", obj[next[nextId]]);
+    let nextItem = obj[next[nextId]] ? false : obj[next[nextId]] = true;
+    console.log("nextItem:", nextItem);
+    if (nextItem) {
+      item.push(next);
+    }
+    console.log("item:", item);
+    return item;
+  }, []);
+  return arr;
+}
+
+function unique10(arr, nextId) {
+  let obj = {};
+  arr = arr.reduce((item, next) => {
+    const nextItem = obj[typeof next[nextId] + next[nextId]] ? false : obj[typeof next[nextId] + next[nextId]] = true;
+    if (nextItem){
+      item.push(next);
+    }
+    return item;
+  },[])
+  return arr;
+}
+
+function unique11(arr){
+    let obj = {};
+    arr = arr.reduce((item, next) => {
+      const nextItem = obj[typeof next + next] ? false : obj[typeof next + next] = true;
+      if (nextItem){
+        item.push(next);
+      }
+      return item;
+    },[])
+  return arr;
+}
+
+console.log("unique10",unique10(a,"id"))
+console.log("unique11",unique11(c))
 </script>
 </html>
